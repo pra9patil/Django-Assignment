@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World API</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        async function fetchGreeting(language) {
+            try {
+                const response = await fetch(`/hello?language=${language}`);
+                const data = await response.json();
+                document.getElementById('result').innerText = data.greeting;
+                document.getElementById('background-img').src = data.backgroundImage; // Update image
+            } catch (error) {
+                document.getElementById('result').innerText = 'Error fetching greeting';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="modal">
+            <h1>Hello World API</h1>
+            <button onclick="fetchGreeting('English')">English</button>
+            <button onclick="fetchGreeting('French')">French</button>
+            <button onclick="fetchGreeting('Hindi')">Hindi</button>
+            <h2>Response:</h2>
+            <p id="result"></p>
+        </div>
+        <div class="image-container">
+            <img id="background-img" src="{{ url_for('static', filename='default_bg.png') }}" alt="Background Image">
+        </div>
+    </div>
+</body>
+</html>
